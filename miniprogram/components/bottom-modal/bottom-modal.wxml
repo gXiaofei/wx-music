@@ -1,0 +1,6 @@
+<view class="modal" hidden="{{!modalShow}}">
+  <view class="panel">
+    <i class="iconfont icon-delete" bind:tap="onClose"></i>
+    <slot name="modal-container"></slot>
+  </view>
+</view>
