@@ -119,11 +119,14 @@ Page({
         backgroundAudioManaget.coverImgUrl = music.al.picUrl;
         backgroundAudioManaget.singer = music.ar[0].name;
         backgroundAudioManaget.epname = music.al.name;
+
+        // 存储历史歌曲
+        this.savePlayHistory(music);
       }
       this.setData({
         isPlaying: true,
       });
-     
+
       // 设置当前播放的musicid 到全局变量
       app.setPlayingMusicId(musicId);
 
@@ -157,6 +160,39 @@ Page({
       isPlaying: false,
     })
   },
+
+  // 保存播放历史
+  savePlayHistory(music) {
+    const openid = app.globalData.openid;
+    const history = wx.getStorageSync(openid);
+
+    let index = -1;
+    let flag = false;
+
+    for (let i = 0; i < history.length; i++) {
+      if (history[i].id === music.id) {
+        flag = true;
+        index = i;
+        break;
+      }
+    }
+
+    if (!flag) {
+      history.unshift(music);
+    } else {
+      if(index !== -1 && index !== 0){
+        history.splice(index, 1);
+        history.unshift(music);
+      }
+    }
+
+    wx.setStorage({
+      key: openid,
+      data: history,
+    })
+  },
+
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

@@ -23,6 +23,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    // 可以获取小程序码上的参数
+    console.log(options.scene);
+
+    
     this._getPlaylist();
   },
 

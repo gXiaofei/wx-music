@@ -1,11 +1,14 @@
 // pages/blog-comment/blog-comment.js
+import formatTime from '../../utils/formatTime.js';
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    blog: {},
+    commentList: [],
+    blogId: '',
   },
 
   /**
@@ -13,6 +16,39 @@ Page({
    */
   onLoad: function (options) {
     console.log(options);
+    this.setData({
+      blogId: options.blogId
+    })
+    this._getBlogDetail();
+  },
+
+  _getBlogDetail() {
+
+    wx.showLoading({
+      title: '加载中',
+    })
+    wx.cloud.callFunction({
+      name: 'blog',
+      data: {
+        blogId: this.data.blogId,
+        $url: 'detail',
+      }
+    }).then(res => {
+      wx.hideLoading();
+
+      let commentList = res.result.commentList.data;
+      let blog = res.result.detail.data[0];
+
+      commentList.forEach(item => {
+        item.createTime = formatTime(new Date(item.createTime))
+      });
+
+      this.setData({
+        blog: blog,
+        commentList: commentList
+      })
+      console.log(res);
+    })
   },
 
   /**
@@ -61,6 +97,11 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    const blogObj = this.data.blog;
+    return {
+      title: blogObj.content,
+      path: `/pages/blog-comment/blog-comment?blogId=${blogObj._id}`,
+      imageUrl: blogObj.img[0]
+    }
   }
 })
