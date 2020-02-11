@@ -3,13 +3,13 @@
     "pages/playlist/playlist",
     "pages/blog/blog",
     "pages/profile/profile",
-    "pages/demo/demo",
     "pages/musiclist/musiclist",
     "pages/player/player",
     "pages/blog-edit/blog-edit",
     "pages/blog-comment/blog-comment",
     "pages/profile-playhistory/profile-playhistory",
-    "pages/profile-bloghistory/profile-bloghistory"
+    "pages/profile-bloghistory/profile-bloghistory",
+    "pages/lijian/lijian"
   ],
   "requiredBackgroundModes": [
     "audio",
@@ -31,6 +31,12 @@
         "text": "音乐",
         "iconPath": "images/music.png",
         "selectedIconPath": "images/music-actived.png"
+      },
+      {
+        "pagePath": "pages/lijian/lijian",
+        "text": "李健",
+        "iconPath": "images/lijian.png",
+        "selectedIconPath": "images/lijian.png"
       },
       {
         "pagePath": "pages/blog/blog",
